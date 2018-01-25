@@ -78,6 +78,10 @@ endfunction
 function! s:FindAncestor(pattern)
   let fd_dir = isdirectory(s:fd) ? s:fd : fnamemodify(s:fd, ':h')
 
+  if !empty(globpath(fd_dir, a:pattern))
+    return fd_dir
+  endif
+
   if s:IsDirectory(a:pattern)
     let match = finddir(a:pattern, fnameescape(fd_dir).';')
   else
